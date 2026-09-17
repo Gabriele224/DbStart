@@ -1,0 +1,36 @@
+if db_Pasto.empty:
+            st.info("Nessun pasto registrato.")
+        else:
+            # Ordino per data decrescente
+            db_Pasto = db_Pasto.sort_values("data", ascending=False)
+            for _, row in db_Pasto.iterrows():
+                with st.container():
+                    st.subheader(f"{row['data']} - {row['tipoPasto']}")
+                    st.write(f"🩸 Glicemia: **{row['glicemia']} mg/dl**")
+                    st.write(f"⏰ Orario: {row['orario']}")
+                    if row["note"]:
+                        st.write(f"📝 {row['note']}")
+                    st.markdown("---")
+
+if db_alimento.empty:
+            st.info("Nessun alimento registrato.")
+        else:
+            for _, row in db_alimento.iterrows():
+                with st.container():
+                    st.subheader(row["nomeAlimento"])
+                    st.write(f"Peso: **{row['totPeso']} g**")
+                    st.write(f"CHO: {row['totCho']} g")
+                    st.write(f"Kcal: {row['totKcal']}")
+                    st.write(f"Insulina: {row['insulina']}")
+                    st.markdown("---")
+
+if db_pesoPersonale.empty:
+            st.info("Nessun peso registrato.")
+        else:
+            db_pesoPersonale = db_pesoPersonale.sort_values("data", ascending=False)
+            for _, row in db_pesoPersonale.iterrows():
+                st.write(f"📅 {row['data']} → {row['pesoPersonale']} kg (BMI: {row['massaCorporea']:.2f})")
+    
+view_alimento=st.selectbox("Lista degli Alimenti:\n",["plumcake","crakers",
+                                                              "pane lariano","pasta gragnano",
+                                                              "susina"])

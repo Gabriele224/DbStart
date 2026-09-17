@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "valiant-cycle-438712-t7",
+  "private_key_id": "03e39597073b6f5ecd602a63f52a206076850a51",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDMb66Fom0RkdCB\nS5SlYKcQxkLdMg2nBEaHRe/PoTqTQC+BwVdK5+gi4V0uXAg3j0bme0RC+lYEH31w\nnUmNfTkqQb7IX7Z5U1KIxZTBBCOEZwwtcbizZjR7zJdqIm0tOL4PkODG18ysyIun\nAFX0uNGFcblJSyqA8yLwzXafQvFOcfN05EfsBTV3ot3aZZhqFks+YEUQT0OT0HDD\nngl9scl1nSyIyqsQmGd8xd1IehzOo+Ler9xWZhHQUQ79Ql9Lb0cQIT54ONp/ArEW\nA3VeTXyX/bX/31JQg+8REOP2v+YI2lWexanMm8eQ6JcyS0oXqEAV2B/lrLcZwOLg\nddS3NjwxAgMBAAECggEAC6IORwXtWWrX98eGe5uinhJ+EwqqWrbkUYXCBelZhTAJ\nlANdtYI5RCTZUc5EXG7/fJWGlp4an2zwTSRyH0ZBJr2rfsjtf/1lDKnbk1kqMTpQ\n59QZC8JU2beUZSJ03nYkYIvgsofsmmdmBPiAq6aJq6ODRN+tWT2cnyG97oWXaBx7\nRh7c/jTSOtv6SBc3VzN5yIw9DtG2wCG+btyfh0KygIMt/9W0GRwE+bTa1Nx28RMH\nh9uiY1C9ud5w5iaB6dOhN0EapB+JLAVYAdMLg+FgRCK8gcqRwpiNodCCrLUsIPBl\nZ8CjntCQ6r20Kh2ev47OMhRmRpwGv1HrCJHFd6UuTQKBgQDy7Mj5aWA/h15Bu8KJ\nsc+ZznpuyvQI7Tpn26N58WHMQKSwby5bwMi6KLg6m6xHRhqZ1d78tE5XEUrspBY0\nAllGcQheGC5nnQuf4muKUYqp5RJGOilPyHXuPBw8/xyA3JiKbq/6hT9KmVNGII3J\nUBO2sfSJknPAsU4AMQ1wbLjn7QKBgQDXcJGTqrrCpa+9fo2tx4uh53qAPFhS8e0O\nlFRBQ8WdMLyFb1pytj2tYagsXXZxh6VWXA4+a5h9hepvH4h1vnfw4APKwMkyeKA+\nnef4lA25NoyXdxsApkWgJv7hnF22i7DtCZr0FTgogsXfl4NEDK+4cCct+1WQSioP\nxQcVMuHU1QKBgQChA7+GSYlJMoGQUlJ0kA4JZWmTbCRqkksnMdbeadcn2iUO6PKy\nUEr70SejeTGsoFPbaX3+w8g1P7oItg4ddP0VirBAJgkEFnzxAdPD/55IVBRTxhNB\n1Z4NRXx2FaYf55eYEhvEknNMD+q5TbSNHe2jJ7rtQMxGiX8o81p0DSxWVQKBgEyt\nHtLcl93BFHwv94LbG2JDPYE4eQMEYaenuRkFYubgOqiPCjT7kZYMxMsNdKNRcNH8\nr4Ed0EcUi2yDX5DwekW7pP3bgYA6GGZQ0wfQwdWiiYU6+dxQUUV/u4VWnq/ipdSn\nb4PhrXwVlxFOHoTwsvXEzNz7r+dLzg6QxEWSN3gFAoGBAK6m47NlJln+MANZQUfs\nNySfE0dBkC57YZaZPl4F7roZYguRgDPYFwzWGEpaMsiERnMBUhtZ/Uhzdo2p6+oc\nJGMLZX8AhoiC/7F/CKgGOWcpnzIN6ezLNjUncyEIV6aBemwuFbxLevj3TcFjM1sa\n1HbeIDdYkv59cMILyllCTD/I\n-----END PRIVATE KEY-----\n",
+  "client_email": "gabriele-ricca@valiant-cycle-438712-t7.iam.gserviceaccount.com",
+  "client_id": "104752038469845451265",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/gabriele-ricca%40valiant-cycle-438712-t7.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
