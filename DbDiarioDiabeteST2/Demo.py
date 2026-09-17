@@ -10,29 +10,28 @@ sa_info = dict(st.secrets["gcp_service_account"])
 # Converte eventuali \n scritti letteralmente in ritorni a capo
 sa_info["private_key"] = sa_info["private_key"].replace("\\n", "\n")
 
+# Collegamento Google Sheets
 gc = gspread.service_account_from_dict(sa_info)
 
-# 📒 Apri i 3 fogli separati
-SPREADSHEET_ID_UTENTE="1UgYZJ3zos9eGukjfZI0ALZY8rHoJaRdbs0OnE8uQCLE"    # <--- sostituisci con ID foglio UtenteCentro
-SPREADSHEET_ID_PASTO="1d2919LVkliCn7NozU96ozhac1B8tiBhlHWS8_B49hlc" #<-- id pasto-->
-SPREADSHEET_ID_PESO ="1Dd1jz668WTiR1gR7DjL23oebMzQ_SEQmytQoE3lxQcg"             # <--- sostituisci con ID foglio Peso E Massa
-#SPREADSHEET_ID_PROFILEMICRO= ""  # ID foglio ProfileMicro
+# ID dei tre fogli
+SPREADSHEET_ID_UTENTE = "1UgYZJ3zos9eGukjfZI0ALZY8rHoJaRdbs0OnE8uQCLE"
+SPREADSHEET_ID_PASTO = "1d2919LVkliCn7NozU96ozhac1B8tiBhlHWS8_B49hlc"
+SPREADSHEET_ID_PESO = "1Dd1jz668WTiR1gR7DjL23oebMzQ_SEQmytQoE3lxQcg"
 
-ws_utente= gc.open_by_key(SPREADSHEET_ID_UTENTE).sheet1
-ws_pasto= gc.open_by_key(SPREADSHEET_ID_PASTO).sheet1
+# Apri i fogli
+ws_utente = gc.open_by_key(SPREADSHEET_ID_UTENTE).sheet1
+ws_pasto = gc.open_by_key(SPREADSHEET_ID_PASTO).sheet1
 ws_peso = gc.open_by_key(SPREADSHEET_ID_PESO).sheet1
-#ws_profilemicro= gc.open_by_key(SPREADSHEET_ID_PROFILEMICRO).sheet1
 
-# Funzione helper per leggere worksheet → DataFrame
+# Funzione per leggere il foglio
 def ws_to_df(ws):
     data = ws.get_all_records()
     return pd.DataFrame(data)
 
-# Carica dati iniziali
-db_utente= ws_to_df(ws_utente)
-db_Pasto=ws_to_df(ws_pasto)
+# Carica i dati
+db_utente = ws_to_df(ws_utente)
+db_Pasto = ws_to_df(ws_pasto)
 db_pesoPersonale = ws_to_df(ws_peso)
-#db_profile= ws_to_df(ws_profilemicro)
 
 """def genera_pdf(df_combined):
     pdf = FPDF(orientation="L", unit="mm", format="A4")
