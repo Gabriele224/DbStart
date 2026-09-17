@@ -3,10 +3,9 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import gspread
-import json
 
 # 🔑 Carico credenziali dal secrets
-sa_info = json.loads(st.secrets["gcp_service_account"])
+sa_info = dict(st.secrets["gcp_service_account"])
 gc = gspread.service_account_from_dict(sa_info)
 
 # 📒 Apri i 3 fogli separati
