@@ -6,6 +6,10 @@ import gspread
 
 # 🔑 Carico credenziali dal secrets
 sa_info = dict(st.secrets["gcp_service_account"])
+
+# Converte eventuali \n scritti letteralmente in ritorni a capo
+sa_info["private_key"] = sa_info["private_key"].replace("\\n", "\n")
+
 gc = gspread.service_account_from_dict(sa_info)
 
 # 📒 Apri i 3 fogli separati
