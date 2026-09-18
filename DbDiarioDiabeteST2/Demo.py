@@ -23,10 +23,12 @@ ws_utente = gc.open_by_key(SPREADSHEET_ID_UTENTE).sheet1
 ws_pasto = gc.open_by_key(SPREADSHEET_ID_PASTO).sheet1
 ws_peso = gc.open_by_key(SPREADSHEET_ID_PESO).sheet1
 
+
 # Funzione per leggere il foglio
 def ws_to_df(ws):
     data = ws.get_all_records()
     return pd.DataFrame(data)
+
 
 # Carica i dati
 db_utente = ws_to_df(ws_utente)
@@ -42,37 +44,64 @@ with st.form("form_utente"):
     NomeUtente = st.text_input("NomeUtente")
     CognomeUtente = st.text_input("Cognome")
     dataNascita = st.date_input("Data")
-    CittaUtente= st.text_input("CittaUtente")
-    CfUtente= st.text_input("CfUtente")
-    CentroDiabetologico= st.text_input("CentroDiabetologico")
+    CittaUtente = st.text_input("CittaUtente")
+    CfUtente = st.text_input("CfUtente")
+    CentroDiabetologico = st.text_input("CentroDiabetologico")
 
     try:
 
         invia_utente = st.form_submit_button("Salva Utente")
         if invia_utente:
-            nuovoUtente = [username, NomeUtente, CognomeUtente, dataNascita.strftime("%Y-%m-%d"), CittaUtente, CfUtente, CentroDiabetologico]
+            nuovoUtente = [
+                username,
+                NomeUtente,
+                CognomeUtente,
+                dataNascita.strftime("%Y-%m-%d"),
+                CittaUtente,
+                CfUtente,
+                CentroDiabetologico,
+            ]
             ws_utente.append_row(nuovoUtente)
             st.success(f"✅ Nuovo Utente salvato!\n{nuovoUtente}")
-            
+
     except Exception as e:
-        st.error(f"Utente Mancante.\nAggiungere prima l'utente la tabella è ancora vuota!\n{e}")
+        st.error(
+            f"Utente Mancante.\nAggiungere prima l'utente la tabella è ancora vuota!\n{e}"
+        )
 
 st.subheader("Aggiungere Il Pasto Nel DB")
 
 with st.form("form_pasto"):
     glicemia = st.number_input("Glicemia", max_value=1000)
-    tipoPasto = st.selectbox("TipoPasto",["PrimaDiColazione","Colazione","DopoColazione","Spuntino1","DopoSpuntino1","Pranzo","DopoPranzo","Spuntino2","DopoSpuntino2","PrimaDiCena","Cena","DopoCena","Notte"])
+    tipoPasto = st.selectbox(
+        "TipoPasto",
+        [
+            "PrimaDiColazione",
+            "Colazione",
+            "DopoColazione",
+            "Spuntino1",
+            "DopoSpuntino1",
+            "Pranzo",
+            "DopoPranzo",
+            "Spuntino2",
+            "DopoSpuntino2",
+            "PrimaDiCena",
+            "Cena",
+            "DopoCena",
+            "Notte",
+        ],
+    )
     orario = st.text_input("Orario")
     data = st.date_input("Data")
     note = st.text_input("Note")
-        
+
     try:
-            
+
         # Seleziona utente da lista utenti reali
         if db_utente.empty:
             st.warning("⚠️ Nessun utente registrato.")
             st.stop()
-            
+
         lista_utenti = db_utente["username"].dropna().astype(str).tolist()
         username_sel = st.selectbox("Seleziona Username", lista_utenti)
 
@@ -82,26 +111,35 @@ with st.form("form_pasto"):
         else:
             id_pasto = max(db_Pasto["id_pasto"].astype(int)) + 1
 
-
         invia = st.form_submit_button("Salva Pasto")
         if invia:
-            nuovoPasto = [id_pasto, glicemia, tipoPasto, orario, data.strftime("%Y-%m-%d"), note, username_sel]
+            nuovoPasto = [
+                id_pasto,
+                glicemia,
+                tipoPasto,
+                orario,
+                data.strftime("%Y-%m-%d"),
+                note,
+                username_sel,
+            ]
             ws_pasto.append_row(nuovoPasto)
             st.success(f"✅ Nuovo pasto salvato!\n{nuovoPasto}")
 
     except Exception as e:
-        st.error(f"Username Mancante.\nAggiungere prima l'user, la tabella è ancora vuota!\n{e}")
+        st.error(
+            f"Username Mancante.\nAggiungere prima l'user, la tabella è ancora vuota!\n{e}"
+        )
 
 st.subheader("Aggiungere I Dati Peso e Altezza Nel DB")
 
 with st.form("form_pesoPersonale"):
-    pesoPersonale = st.number_input("Peso",max_value=100.0,format="%.2f")
-    altezza = st.number_input("Altezza",max_value=2.40,format="%.2f")
+    pesoPersonale = st.number_input("Peso", max_value=100.0, format="%.2f")
+    altezza = st.number_input("Altezza", max_value=2.40, format="%.2f")
     data = st.date_input("Data")
 
     try:
-        altezza=float(altezza)
-        massaCorporea= pesoPersonale / (altezza ** 2)
+        altezza = float(altezza)
+        massaCorporea = pesoPersonale / (altezza**2)
         st.success(f"Massa Corporea Calcolata:{massaCorporea:.2f}")
 
     except ZeroDivisionError as e:
@@ -111,7 +149,7 @@ with st.form("form_pesoPersonale"):
     if db_utente.empty:
         st.warning("⚠️ Nessun utente registrato.")
         st.stop()
-            
+
     lista_utenti = db_utente["username"].tolist()
     username_sel = st.selectbox("Seleziona Username", lista_utenti)
 
@@ -122,6 +160,29 @@ with st.form("form_pesoPersonale"):
 
     invia_PesoPersonale = st.form_submit_button("Salva Peso")
     if invia_PesoPersonale:
-        nuovoPeso = [id_peso, pesoPersonale, massaCorporea, data.strftime("%Y-%m-%d"), username_sel]
+        nuovoPeso = [
+            id_peso,
+            pesoPersonale,
+            massaCorporea,
+            data.strftime("%Y-%m-%d"),
+            username_sel,
+        ]
         ws_peso.append_row(nuovoPeso)
         st.success(f"✅ Nuovo peso salvato!\n{nuovoPeso}")
+
+st.subheader("Media Glicemia")
+
+username = st.selectbox("Utente", db_Pasto["username"].unique())
+
+data_inizio = st.date_input("Data inizio")
+data_fine = st.date_input("Data fine")
+
+df = db_Pasto[
+    (db_Pasto["username"] == username)
+    & (pd.to_datetime(db_Pasto["data"]).dt.date >= data_inizio)
+    & (pd.to_datetime(db_Pasto["data"]).dt.date <= data_fine)
+]
+
+st.write("Media glicemia:", df["glicemia"].mean())
+
+st.dataframe(df)
