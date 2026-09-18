@@ -184,5 +184,3 @@ df = db_Pasto[
 ]
 
 st.write("Media glicemia:", df["glicemia"].mean())
-
-st.dataframe(df)
