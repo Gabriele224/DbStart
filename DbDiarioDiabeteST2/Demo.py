@@ -171,8 +171,8 @@ with st.form("form_pesoPersonale"):
         st.success(f"✅ Nuovo peso salvato!\n{nuovoPeso}")
 
 st.subheader("Media Glicemia")
-
-username = st.selectbox("Utente", db_Pasto["username"].unique())
+user =db_Pasto["username"]
+username = st.selectbox("Utente", user.unique())
 
 data_inizio = st.date_input("Data inizio")
 data_fine = st.date_input("Data fine")
