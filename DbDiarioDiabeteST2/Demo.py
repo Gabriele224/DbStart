@@ -184,3 +184,20 @@ df = db_Pasto[
 ]
 
 st.write("Media glicemia:", df["glicemia"].mean())
+
+#<---Ottenimento media peso e massa
+st.subheader("Media Peso e Massa")
+
+username = st.selectbox("Utente", db_pesoPersonale["username"].unique())
+
+data_inizio = st.date_input("Data inizio")
+data_fine = st.date_input("Data fine")
+
+df = db_pesoPersonale[
+    (db_pesoPersonale["username"] == username)
+    & (pd.to_datetime(db_pesoPersonale["data"]).dt.date >= data_inizio)
+    & (pd.to_datetime(db_pesoPersonale["data"]).dt.date <= data_fine)
+]
+
+st.write("Media Peso:", df["pesoPersonale"].mean())
+st.write("Media Massa:", df["massaCorporea"].mean())
