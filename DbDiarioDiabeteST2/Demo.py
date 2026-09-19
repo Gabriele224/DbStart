@@ -190,8 +190,8 @@ st.subheader("Media Peso e Massa")
 
 username_pesomassa = st.selectbox("Utente", db_pesoPersonale["username"].unique(), key="utente_pesomassa")
 
-data_inizio_pm = st.date_input("Data inizio PM",key="data pm")
-data_fine_pm = st.date_input("Data fine PM", key="data pm")
+data_inizio_pm = st.date_input("Data inizio PM",key="data inizio pm")
+data_fine_pm = st.date_input("Data fine PM", key="data fine pm")
 
 df_pm = db_pesoPersonale[
     (db_pesoPersonale["username"] == username)
