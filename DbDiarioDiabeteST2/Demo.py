@@ -194,7 +194,7 @@ data_inizio_pm = st.date_input("Data inizio PM",key="data inizio pm")
 data_fine_pm = st.date_input("Data fine PM", key="data fine pm")
 
 df_pm = db_pesoPersonale[
-    (db_pesoPersonale["username"] == username)
+    (db_pesoPersonale["username"] == username_pesomassa)
     & (pd.to_datetime(db_pesoPersonale["data"]).dt.date >= data_inizio_pm)
     & (pd.to_datetime(db_pesoPersonale["data"]).dt.date <= data_fine_pm)
 ]
