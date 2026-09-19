@@ -169,34 +169,38 @@ with st.form("form_pesoPersonale"):
         ]
         ws_peso.append_row(nuovoPeso)
         st.success(f"✅ Nuovo peso salvato!\n{nuovoPeso}")
-
+#<---Ottenimento meida glicemica--->
 st.subheader("Media Glicemia")
-user =db_Pasto["username"]
-username = st.selectbox("Utente", user.unique())
 
-data_inizio = st.date_input("Data inizio")
-data_fine = st.date_input("Data fine")
+username_pasto = st.selectbox("Utente", db_Pasto["username"].unique(), key="utente_glicemia")
 
-df = db_Pasto[
+data_inizio_glice = st.date_input("Data inizio")
+data_fine_glice = st.date_input("Data fine")
+
+df_glice = db_Pasto[
     (db_Pasto["username"] == username)
-    & (pd.to_datetime(db_Pasto["data"]).dt.date >= data_inizio)
-    & (pd.to_datetime(db_Pasto["data"]).dt.date <= data_fine)
+    & (pd.to_datetime(db_Pasto["data"]).dt.date >= data_inizio_glice)
+    & (pd.to_datetime(db_Pasto["data"]).dt.date <= data_fine_glice)
 ]
 
-st.write("Media glicemia:", df["glicemia"].mean())
+st.write("Media glicemia:", df_glice["glicemia"].mean())
 
-#<---Ottenimento media peso e massa
+#<---Ottenimento media peso e massa--->
 st.subheader("Media Peso e Massa")
 
-username = st.selectbox("Utente", db_pesoPersonale["username"].unique())
+username_pesomassa = st.selectbox("Utente", db_pesoPersonale["username"].unique(), key="utente_pesomassa")
 
-data_inizio = st.date_input("Data inizio")
-data_fine = st.date_input("Data fine")
+data_inizio_pm = st.date_input("Data inizio")
+data_fine_pm = st.date_input("Data fine")
 
-df = db_pesoPersonale[
+df_pm = db_pesoPersonale[
     (db_pesoPersonale["username"] == username)
-    & (pd.to_datetime(db_pesoPersonale["data"]).dt.date >= data_inizio)
-    & (pd.to_datetime(db_pesoPersonale["data"]).dt.date <= data_fine)
+    & (pd.to_datetime(db_pesoPersonale["data"]).dt.date >= data_inizio_pm)
+    & (pd.to_datetime(db_pesoPersonale["data"]).dt.date <= data_fine_pm)
+]
+
+st.write("Media Peso:", df_pm["pesoPersonale"].mean())
+st.write("Media Massa:", df_pm["massaCorporea"].mean())
 ]
 
 st.write("Media Peso:", df["pesoPersonale"].mean())
