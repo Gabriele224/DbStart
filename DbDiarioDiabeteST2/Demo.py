@@ -201,7 +201,3 @@ df_pm = db_pesoPersonale[
 
 st.write("Media Peso:", df_pm["pesoPersonale"].mean())
 st.write("Media Massa:", df_pm["massaCorporea"].mean())
-]
-
-st.write("Media Peso:", df["pesoPersonale"].mean())
-st.write("Media Massa:", df["massaCorporea"].mean())
