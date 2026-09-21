@@ -16,11 +16,13 @@ gc = gspread.service_account_from_dict(sa_info)
 # ID dei tre fogli
 SPREADSHEET_ID_UTENTE = "1UgYZJ3zos9eGukjfZI0ALZY8rHoJaRdbs0OnE8uQCLE"
 SPREADSHEET_ID_PASTO = "1d2919LVkliCn7NozU96ozhac1B8tiBhlHWS8_B49hlc"
+SPREADSHEET_ID_ALIMENTO = "1gL4ADLoJJq2E0lJ9DAa_v9cLXKGWX8UAIDJTizOI6Sk"  # <--- sostituisci con ID foglio AlimentoConsumato
 SPREADSHEET_ID_PESO = "1Dd1jz668WTiR1gR7DjL23oebMzQ_SEQmytQoE3lxQcg"
 
 # Apri i fogli
 ws_utente = gc.open_by_key(SPREADSHEET_ID_UTENTE).sheet1
 ws_pasto = gc.open_by_key(SPREADSHEET_ID_PASTO).sheet1
+ws_alimento = gc.open_by_key(SPREADSHEET_ID_ALIMENTO).sheet1
 ws_peso = gc.open_by_key(SPREADSHEET_ID_PESO).sheet1
 
 
@@ -33,6 +35,7 @@ def ws_to_df(ws):
 # Carica i dati
 db_utente = ws_to_df(ws_utente)
 db_Pasto = ws_to_df(ws_pasto)
+db_alimento = ws_to_df(ws_alimento)
 db_pesoPersonale = ws_to_df(ws_peso)
 
 # --------------------- INSERIMENTO DATI ---------------------
@@ -130,6 +133,62 @@ with st.form("form_pasto"):
             f"Username Mancante.\nAggiungere prima l'user, la tabella è ancora vuota!\n{e}"
         )
 
+st.subheader("Aggiungere L'Alimento Nel DB")
+
+with st.form("form_alimento"):
+    nomeAlimento = st.text_input("Alimento")
+    totPeso = st.number_input("TotPeso", max_value=1000.0, format="%.2f")
+    totCho = st.number_input("TotCho", max_value=1000.0, format="%.2f")
+    totKcal = st.number_input("TotKcal", max_value=1000.0, format="%.2f")
+    insulina = st.number_input("Insulina", max_value=100.0, format="%.2f")
+
+    try:
+        data_scelta = st.date_input("Seleziona data pasto")
+        data_scelta = data_scelta.strftime("%Y-%m-%d")
+        db_filtrato = db_Pasto[db_Pasto["data"] == data_scelta]
+
+        if db_filtrato.empty:
+            st.warning("⚠️ Nessun pasto per la data selezionata.")
+
+        opzioni_pasto = (
+            db_filtrato["id_pasto"].astype(str)
+            + " - "
+            + db_filtrato["tipoPasto"].astype(str)
+            + " ("
+            + db_filtrato["data"].astype(str)
+            + ")"
+            + " ("
+            + db_filtrato["usernameId"].astype(str)
+            + ")"
+        )
+
+        scelta = st.selectbox("Scegli il pasto", opzioni_pasto)
+        id_pasto_sel = int(scelta.split(" - ")[0])
+
+        # esempio per DiarioPasti
+        if len(db_alimento) == 0:
+            id_alimento = 1
+        else:
+            id_alimento = max(db_alimento["id_alimento"].astype(int)) + 1
+
+        invia_alimento = st.form_submit_button("Salva Alimento")
+        if invia_alimento:
+            nuovoAlimento = [
+                id_alimento,
+                nomeAlimento,
+                totPeso,
+                totCho,
+                totKcal,
+                insulina,
+                id_pasto_sel,
+            ]
+            ws_alimento.append_row(nuovoAlimento)
+            st.success(f"✅ Nuovo alimento salvato!\n{nuovoAlimento}")
+
+    except Exception as e:
+        st.error(
+            f"Pasto Mancante.\nAggiungere prima il pasto la tabella è ancora vuota!\n{e}"
+        )
 st.subheader("Aggiungere I Dati Peso e Altezza Nel DB")
 
 with st.form("form_pesoPersonale"):
@@ -169,28 +228,33 @@ with st.form("form_pesoPersonale"):
         ]
         ws_peso.append_row(nuovoPeso)
         st.success(f"✅ Nuovo peso salvato!\n{nuovoPeso}")
-#<---Ottenimento meida glicemica--->
+
+# <---Ottenimento meida glicemica--->
 st.subheader("Media Glicemia")
 
-username_pasto = st.selectbox("Utente", db_Pasto["username"].unique(), key="utente_glicemia")
+username_pasto = st.selectbox(
+    "Utente", db_Pasto["username"].unique(), key="utente_glicemia"
+)
 
 data_inizio_glice = st.date_input("Data inizio")
 data_fine_glice = st.date_input("Data fine")
 
 df_glice = db_Pasto[
-    (db_Pasto["username"] == username_pasto)
+    (db_Pasto["username"] == username)
     & (pd.to_datetime(db_Pasto["data"]).dt.date >= data_inizio_glice)
     & (pd.to_datetime(db_Pasto["data"]).dt.date <= data_fine_glice)
 ]
 
 st.write("Media glicemia:", df_glice["glicemia"].mean())
 
-#<---Ottenimento media peso e massa--->
+# <---Ottenimento media peso e massa--->
 st.subheader("Media Peso e Massa")
 
-username_pesomassa = st.selectbox("Utente", db_pesoPersonale["username"].unique(), key="utente_pesomassa")
+username_pesomassa = st.selectbox(
+    "Utente", db_pesoPersonale["username"].unique(), key="utente_pesomassa"
+)
 
-data_inizio_pm = st.date_input("Data inizio PM",key="data inizio pm")
+data_inizio_pm = st.date_input("Data inizio PM", key="data inizio pm")
 data_fine_pm = st.date_input("Data fine PM", key="data fine pm")
 
 df_pm = db_pesoPersonale[
