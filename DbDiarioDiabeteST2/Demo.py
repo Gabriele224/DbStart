@@ -269,14 +269,14 @@ st.write("Media Massa:", df_pm["massaCorporea"].mean())
 st.subheader("Media Carb,peso,kcal")
 
 username_alimento = st.selectbox(
-    "Utente", db_Pasto["username"].unique(), key="utente_alimento"
+    "Utente", db_Pasto["usernameId"].unique(), key="utente_alimento"
 )
 
 data_inizio_alimento = st.date_input("Data inizio Ali", key="data inizio Ali")
 data_fine_alimento = st.date_input("Data fine Ali", key="data fine Ali")
 
 df_pasti = db_Pasto[
-    (db_Pasto["username"] == username_alimento)
+    (db_Pasto["usernameId"] == username_alimento)
     & (pd.to_datetime(db_Pasto["data"]).dt.date >= data_inizio_alimento)
     & (pd.to_datetime(db_Pasto["data"]).dt.date <= data_fine_alimento)
 ]
