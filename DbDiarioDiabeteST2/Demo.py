@@ -233,14 +233,14 @@ with st.form("form_pesoPersonale"):
 st.subheader("Media Glicemia")
 
 username_pasto = st.selectbox(
-    "Utente", db_Pasto["username"].unique(), key="utente_glicemia"
+    "Utente", db_Pasto["usernameId"].unique(), key="utente_glicemia"
 )
 
 data_inizio_glice = st.date_input("Data inizio")
 data_fine_glice = st.date_input("Data fine")
 
 df_glice = db_Pasto[
-    (db_Pasto["username"] == username)
+    (db_Pasto["usernameId"] == username)
     & (pd.to_datetime(db_Pasto["data"]).dt.date >= data_inizio_glice)
     & (pd.to_datetime(db_Pasto["data"]).dt.date <= data_fine_glice)
 ]
