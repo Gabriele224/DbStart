@@ -138,10 +138,15 @@ st.subheader("Aggiungere L'Alimento Nel DB")
 with st.form("form_alimento"):
     nomeAlimento = st.text_input("Alimento")
     totPeso = st.number_input("TotPeso", max_value=1000.0, format="%.2f")
-    totCho = st.number_input("TotCho", max_value=1000.0, format="%.2f")
-    totKcal = st.number_input("TotKcal", max_value=1000.0, format="%.2f")
+    calcCho = st.number_input("CalcCho", max_value=1000.0, format="%.2f")
+    calcKcal = st.number_input("CalcKcal", max_value=1000.0, format="%.2f")
     insulina = st.number_input("Insulina", max_value=100.0, format="%.2f")
 
+    totCho = totPeso * calcCho / 100
+    st.info(f"Tot Cho Calcolati:{totCho:.2f}")
+
+    totKcal = totPeso * calcKcal / 100
+    st.info(f"Tot Kcal Calcolati:{totKcal:.2f}")
     try:
         data_scelta = st.date_input("Seleziona data pasto")
         data_scelta = data_scelta.strftime("%Y-%m-%d")
