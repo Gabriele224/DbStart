@@ -229,7 +229,7 @@ with st.form("form_pesoPersonale"):
         ws_peso.append_row(nuovoPeso)
         st.success(f"✅ Nuovo peso salvato!\n{nuovoPeso}")
 
-# <---Ottenimento meida glicemica--->
+# <---Ottenimento media glicemica--->
 st.subheader("Media Glicemia")
 
 username_pasto = st.selectbox(
@@ -246,7 +246,25 @@ df_glice = db_Pasto[
 ]
 
 st.write("Media glicemia:", df_glice["glicemia"].mean())
+# <---Ottenimento glicata--->
+st.subheader("HBA1C - Glicata")
 
+username_glicata = st.selectbox(
+    "Utente", db_Pasto["usernameId"].unique(), key="utente_glicata"
+)
+
+data_inizio_glicata = st.date_input("Data inizio glicata")
+data_fine_glicata = st.date_input("Data fine glicata")
+
+df_glicata = db_Pasto[
+    (db_Pasto["usernameId"] == username_glicata)
+    & (pd.to_datetime(db_Pasto["data"]).dt.date >= data_inizio_glicata)
+    & (pd.to_datetime(db_Pasto["data"]).dt.date <= data_fine_glicata)
+]
+
+mediaglicemia=df_glicata["glicemia"].mean()
+emogloglicata = (mediaglicemia + 47.6) / 27.6 if not np.isnan(mediaglicemia) else 0
+st.write("Media Emoglobina glicata (HBA1C):\n", emogloglicata)
 # <---Ottenimento media peso e massa--->
 st.subheader("Media Peso e Massa")
 
