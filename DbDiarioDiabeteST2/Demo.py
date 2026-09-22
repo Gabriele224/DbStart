@@ -240,7 +240,7 @@ data_inizio_glice = st.date_input("Data inizio")
 data_fine_glice = st.date_input("Data fine")
 
 df_glice = db_Pasto[
-    (db_Pasto["usernameId"] == username)
+    (db_Pasto["usernameId"] == username_pasto)
     & (pd.to_datetime(db_Pasto["data"]).dt.date >= data_inizio_glice)
     & (pd.to_datetime(db_Pasto["data"]).dt.date <= data_fine_glice)
 ]
