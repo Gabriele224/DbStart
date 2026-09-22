@@ -266,7 +266,7 @@ df_pm = db_pesoPersonale[
 st.write("Media Peso:", df_pm["pesoPersonale"].mean())
 st.write("Media Massa:", df_pm["massaCorporea"].mean())
 
-st.subheader("Media Carb,peso,kcal")
+st.subheader("Somma Carb,peso,kcal")
 
 username_alimento = st.selectbox(
     "Utente", db_Pasto["usernameId"].unique(), key="utente_alimento"
