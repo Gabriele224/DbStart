@@ -306,7 +306,7 @@ df_pasti = db_Pasto[
 
 df_alimento=db_alimento[
 
-    db_alimento["pastoId"].isin(db_Pasto["id_pasto"])
+    db_alimento["pastoId"].isin(df_pasti["id_pasto"])
 ]
 st.write("Tot Peso:", df_alimento["totPeso"].sum())
 st.write("Tot Cho:", df_alimento["totCho"].sum())
