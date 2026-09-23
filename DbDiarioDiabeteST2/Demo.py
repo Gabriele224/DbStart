@@ -308,11 +308,12 @@ st.write("Tot Kcal:", df_alimento["totKcal"].sum())
 st.write("Tot insulina:", df_alimento["insulina"].sum())
 
 st.subheader("Calcolo cho,kcal")
+calcPeso = st.number_input("CalcPeso", max_value=1000.0, format="%.2f")
 calcCho = st.number_input("CalcCho", max_value=1000.0, format="%.2f")
 calcKcal = st.number_input("CalcKcal", max_value=1000.0, format="%.2f")
 
-Cho = totPeso * calcCho / 100
+Cho = calcPeso * calcCho / 100
 st.info(f"Tot Cho Calcolati:{Cho:.2f}")
 
-Kcal = totPeso * calcKcal / 100
+Kcal = calcPeso * calcKcal / 100
 st.info(f"Tot Kcal Calcolati:{Kcal:.2f}")
